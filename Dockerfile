@@ -1,7 +1,7 @@
 FROM --platform=linux/amd64  docker.io/centos:7
 
-#Declare we will use port 80 on the container
-EXPOSE 80
+#Declare we will use port 8080 on the container
+EXPOSE 8080
 
 
 # Install apache webserver and utilities & clear yum cache
