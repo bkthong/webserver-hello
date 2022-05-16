@@ -1,9 +1,20 @@
-FROM registry.access.redhat.com/rhscl/httpd-24-rhel7:latest
+FROM --platform=linux/amd64  docker.io/centos:7
 
-RUN mkdir /var/www/html/servicea && \
-    mkdir /var/www/html/serviceb && \
-    echo 'Simple hello world (1.1)' > /var/www/html/index.html && \
-    echo 'This is servicea' > /var/www/html/servicea/index.html && \
-    echo 'This is serviceb' > /var/www/html/serviceb/index.html 
+#Declare we will use port 80 on the container
+EXPOSE 80
+
+
+# Install apache webserver and utilities & clear yum cache
+RUN yum -y install httpd bind-utils procps-ng && \
+    yum clean all
+
+# Update the application to use port 8080 instead of 80
+RUN sed -i 's/^Listen 80/Listen 8080/' /etc/httpd/conf/httpd.conf
+
+#Add our source code
+ADD src/ /var/www/html
+
+# The program to start when a container is instantiated from this image
+CMD [ "httpd" , "-D" , "FOREGROUND" ] 
     
 
