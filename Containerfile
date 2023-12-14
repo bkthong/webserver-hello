@@ -10,7 +10,7 @@ EXPOSE 8080
 
 
 # Install apache webserver and utilities & clear yum cache
-RUN yum -y install httpd bind-utils procps-ng iputils && \
+RUN yum -y install httpd bind-utils procps-ng iputils iproute && \
     yum clean all
 
 # Update the application to use port 8080 instead of 80
